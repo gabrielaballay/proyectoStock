@@ -15,6 +15,7 @@ public class AdministrarVenta extends javax.swing.JDialog {
     private ArrayList<Venta> ventasCombo = new ArrayList<>();
     private VentaData venData = new VentaData();
     private Venta_Detalle_Data vdd = new Venta_Detalle_Data();
+    
 
     public AdministrarVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -415,7 +416,7 @@ public class AdministrarVenta extends javax.swing.JDialog {
                     txtSubTotal.setText(vd.getNroFact().getSub_total() + "");
                     txtTotal.setText(vd.getNroFact().getTotal() + "");
                     txtFecha.setText(vd.getNroFact().getFecha());
-                    txtEmpleado.setText(vd.getNroFact().getId_emp().getApellido() + " " + vd.getNroFact().getId_emp().getNombre());
+                    txtEmpleado.setText(vd.getNroFact().getId_emp().getNombres());
                     txtClienteNombre.setText(vd.getNroFact().getCl().getCl_nombre());
                     txtDniD.setText(vd.getNroFact().getCl().getCl_dni()+"");
                     txtDireD.setText(vd.getNroFact().getCl().getCl_direccion());

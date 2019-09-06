@@ -65,7 +65,4 @@ public class Empleado {
         this.direccion = direccion;
     }
     
-    public String toString(){
-        return id_empleado +" - "+ apellido + " " + nombre;
-    }
 }

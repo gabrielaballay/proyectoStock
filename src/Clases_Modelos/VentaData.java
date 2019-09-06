@@ -29,7 +29,7 @@ public class VentaData extends Conexion {
             ps.setFloat(4, v.getDescuento());
             ps.setDouble(5, v.getSub_total());
             ps.setDouble(6, v.getTotal());
-            ps.setInt(7, v.getId_emp().getId_empleado());
+            ps.setInt(7, v.getId_emp().getId_usuario());
             ps.setInt(8, v.getCl().getId_cliente());
 
             ps.executeUpdate();
@@ -57,7 +57,7 @@ public class VentaData extends Conexion {
                 venta.setDescuento(rs.getFloat("descuento"));
                 venta.setSub_total(rs.getDouble("sub_total"));
                 venta.setTotal(rs.getDouble("total"));
-                Empleado e = buscarEmpleado(rs.getInt("id_empleado"));
+                Usuario e = buscarEmpleado(rs.getInt("id_empleado"));
                 venta.setId_emp(e);
                 Cliente c = buscarCliente(rs.getInt("id_cliente"));
                 venta.setCl(c);
@@ -85,7 +85,7 @@ public class VentaData extends Conexion {
                 venta.setDescuento(rs.getFloat("descuento"));
                 venta.setSub_total(rs.getDouble("sub_total"));
                 venta.setTotal(rs.getDouble("total"));
-                Empleado e = buscarEmpleado(rs.getInt("id_empleado"));
+                Usuario e = buscarEmpleado(rs.getInt("id_empleado"));
                 Cliente c = buscarCliente(rs.getInt("id_cliente"));
                 venta.setCl(c);
                 venta.setId_emp(e);
@@ -98,8 +98,8 @@ public class VentaData extends Conexion {
         return venta;
     }
 
-    public Empleado buscarEmpleado(int id) {
-        EmpleadoData ed = new EmpleadoData();
+    public Usuario buscarEmpleado(int id) {
+        UsuarioData ed = new UsuarioData();
         return ed.buscarEmpleado(id);
     }
 

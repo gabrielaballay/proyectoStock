@@ -14,22 +14,16 @@ public class EmpleadoData extends Conexion {
 
     public void cargarEmpleado(Empleado emp) {
         try {
-            String sql = "INSERT INTO empleado (apellido,nombre,dni,direccion)"
-                    + "VALUES (?,?,?,?);";
+            String sql = "INSERT INTO empleado (apellido,nombre,dni,direccion, estado)"
+                    + "VALUES (?,?,?,?, true);";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, emp.getApellido());
             ps.setString(2, emp.getNombre());
             ps.setInt(3, emp.getDni());
             ps.setString(4, emp.getDireccion());
-            ps.executeUpdate();
+            ps.execute();
 
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                emp.setId_empleado(rs.getInt(1));
-            } else {
-                JOptionPane.showMessageDialog(null, "error al intentar obtener el id\n luegos de guardar un empleado");
-            }
             ps.close();
 
         } catch (SQLException ex) {
@@ -46,13 +40,15 @@ public class EmpleadoData extends Conexion {
             ResultSet rs = ps.executeQuery();
             Empleado e;
             while (rs.next()) {
-                e = new Empleado();
-                e.setId_empleado(rs.getInt("id_empleado"));
-                e.setApellido(rs.getString("apellido"));
-                e.setNombre(rs.getString("nombre"));
-                e.setDni(rs.getInt("dni"));
-                e.setDireccion(rs.getString("direccion"));
-                empleados.add(e);
+                if(rs.getBoolean("estado")){
+                    e = new Empleado();
+                    e.setId_empleado(rs.getInt("id_empleado"));
+                    e.setApellido(rs.getString("apellido"));
+                    e.setNombre(rs.getString("nombre"));
+                    e.setDni(rs.getInt("dni"));
+                    e.setDireccion(rs.getString("direccion"));
+                    empleados.add(e);
+                }
             }
             ps.close();
         } catch (SQLException ex) {
@@ -63,7 +59,7 @@ public class EmpleadoData extends Conexion {
 
     public void eliminarEmpleado(int dni) {
         try {
-            String sql = "DELETE FROM empleado WHERE dni= ?;";
+            String sql = "UPDATE empleado SET estado=false WHERE dni= ?;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
             ps.executeUpdate();
@@ -106,12 +102,14 @@ public class EmpleadoData extends Conexion {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                e = new Empleado();
-                e.setId_empleado(rs.getInt("id_empleado"));
-                e.setApellido(rs.getString("apellido"));
-                e.setNombre(rs.getString("nombre"));
-                e.setDni(rs.getInt("dni"));
-                e.setDireccion(rs.getString("direccion"));
+                if(rs.getBoolean("estado")){
+                    e = new Empleado();
+                    e.setId_empleado(rs.getInt("id_empleado"));
+                    e.setApellido(rs.getString("apellido"));
+                    e.setNombre(rs.getString("nombre"));
+                    e.setDni(rs.getInt("dni"));
+                    e.setDireccion(rs.getString("direccion"));
+                }
             }
             ps.close();
 

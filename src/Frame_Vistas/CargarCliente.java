@@ -270,6 +270,7 @@ public class CargarCliente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (txtDni.getText().length()<9){
         if (txtNombres.getText().equals("") || txtDni.getText().equals("") || txtDireccion.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe Llenar todos los Campos!");
         } else {
@@ -283,6 +284,9 @@ public class CargarCliente extends javax.swing.JDialog {
                 LimpiarFrm.limpiarFormulario(panelCL);
             }
 
+        }
+        }else{
+            JOptionPane.showMessageDialog(null, "DNI incorrecto!!!","Atencion",0);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

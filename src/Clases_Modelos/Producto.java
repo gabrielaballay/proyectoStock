@@ -9,8 +9,10 @@ public class Producto {
     private String marca;
     private float gravamen;
     private double precioGravamen;
+    private String proveedor;
+    private String categoria;
 
-    public Producto(int id_stock, String codigo, String Producto, int cantidad, double precio, String marca, float gravamen, double precioGravamen) {
+    public Producto(int id_stock, String codigo, String Producto, int cantidad, double precio, String marca, float gravamen, double precioGravamen, String proveedor, String categoria) {
         this.id_stock = id_stock;
         this.codigo = codigo;
         this.Producto = Producto;
@@ -19,9 +21,11 @@ public class Producto {
         this.marca = marca;
         this.gravamen = gravamen;
         this.precioGravamen = precioGravamen;
+        this.proveedor = proveedor;
+        this.categoria = categoria;
     }
 
-    public Producto(String codigo, String Producto, int cantidad, double precio, String marca, float gravamen, double precioGravamen) {
+    public Producto(String codigo, String Producto, int cantidad, double precio, String marca, float gravamen, double precioGravamen, String proveedor, String categoria) {
         this.codigo = codigo;
         this.Producto = Producto;
         this.cantidad = cantidad;
@@ -29,6 +33,8 @@ public class Producto {
         this.marca = marca;
         this.gravamen = gravamen;
         this.precioGravamen = precioGravamen;
+        this.proveedor = proveedor;
+        this.categoria = categoria;
     }
 
     public Producto() {
@@ -96,6 +102,22 @@ public class Producto {
 
     public void setPrecioGravamen(double precioGravamen) {
         this.precioGravamen = precioGravamen;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
 }

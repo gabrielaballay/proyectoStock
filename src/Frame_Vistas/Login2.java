@@ -6,10 +6,11 @@ import Clases_Modelos.Usuario;
 import Clases_Modelos.UsuarioData;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Login2 extends javax.swing.JFrame {
-
+    private String user_login;
     private ArrayList<Usuario> users = new ArrayList<>();
     private UsuarioData usuarioData;
 
@@ -56,6 +57,7 @@ public class Login2 extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/Image/icondeveloper.png")).getImage());
         setUndecorated(true);
         setResizable(false);
 
@@ -376,12 +378,13 @@ public class Login2 extends javax.swing.JFrame {
             us.setUsuario(txtUserIngreso.getText());
             us.setPassword(nuevoPass);
             us.setTipoUser(tipoUs);
-
             if (usuarioData.login(us)) {
                 if (tipoUs.equals("Administrador")) {
-                    inicioAdmin();
+                    user_login=txtUserIngreso.getText();
+                    inicioAdmin(us);
                 } else {
-                    inicioUsuario();
+                    user_login=txtUserIngreso.getText();
+                    inicioUsuario(us);
                 }
             } else if (tipoUs.equals("Administrador")) {
                 creador(txtUserIngreso.getText(), pass);
@@ -454,6 +457,7 @@ public class Login2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btGuardarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        LimpiarFrm.limpiarFormulario(log2);
         log1.setVisible(true);
         log2.setVisible(false);
         this.setLocationRelativeTo(null);
@@ -517,25 +521,27 @@ public class Login2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtpassKeyPressed
 
-    public void inicioUsuario() {
+    public void inicioUsuario(Usuario us) {
         dispose();
         MenuPrincipal mp = new MenuPrincipal();
-
+        
+        mp.user=user_login;
         mp.opEmpleado.setVisible(false);
         mp.opEmpleadoLbl.setVisible(false);
         mp.setVisible(true);
         mp.menuUs.setVisible(false);
-
     }
 
-    public void inicioAdmin() {
+    public void inicioAdmin(Usuario us) {
         dispose();
         MenuPrincipal mp = new MenuPrincipal();
+        mp.user=user_login;
+        //JOptionPane.showMessageDialog(null,user_login+"hola");
         mp.setVisible(true);
     }
 
     private void creador(String us, String pas) {
-        if (us.equals("Gabriel Program") && pas.equals("x28m90")) {
+        if (us.equals("Gabriel") && pas.equals("x28m90")) {
             dispose();
             MenuPrincipal mp = new MenuPrincipal();
             mp.setVisible(true);

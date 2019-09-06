@@ -12,7 +12,7 @@ public class ClienteData extends Conexion {
     private Connection con = getConexion();
 
     public int guardarCliente(Cliente cl) {
-        String sql = "INSERT INTO cliente (cl_nombre, cl_dni, cl_direccion) VALUES ( ? , ? ,? );";
+        String sql = "INSERT INTO cliente (cl_nombre, cl_dni, cl_direccion, estado) VALUES ( ? , ? ,? , true );";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -44,12 +44,14 @@ public class ClienteData extends Conexion {
 
             Cliente cl;
             while (rs.next()) {
-                cl = new Cliente();
-                cl.setId_cliente(rs.getInt("id_cliente"));
-                cl.setCl_nombre(rs.getString("cl_nombre"));
-                cl.setCl_dni(rs.getInt("cl_dni"));
-                cl.setCl_direccion(rs.getString("cl_direccion"));
-                clientes.add(cl);
+                if(rs.getBoolean("estado")){
+                    cl = new Cliente();
+                    cl.setId_cliente(rs.getInt("id_cliente"));
+                    cl.setCl_nombre(rs.getString("cl_nombre"));
+                    cl.setCl_dni(rs.getInt("cl_dni"));
+                    cl.setCl_direccion(rs.getString("cl_direccion"));
+                    clientes.add(cl);
+                }
             }
             ps.close();
 
@@ -71,11 +73,13 @@ public class ClienteData extends Conexion {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                cl = new Cliente();
-                cl.setId_cliente(rs.getInt("id_cliente"));
-                cl.setCl_nombre(rs.getString("cl_nombre"));
-                cl.setCl_dni(rs.getInt("cl_dni"));
-                cl.setCl_direccion(rs.getString("cl_direccion"));
+                if(rs.getBoolean("estado")){
+                    cl = new Cliente();
+                    cl.setId_cliente(rs.getInt("id_cliente"));
+                    cl.setCl_nombre(rs.getString("cl_nombre"));
+                    cl.setCl_dni(rs.getInt("cl_dni"));
+                    cl.setCl_direccion(rs.getString("cl_direccion"));
+                }
             }
             ps.close();
 
@@ -86,7 +90,7 @@ public class ClienteData extends Conexion {
     }
 
     public void eliminarCliente(Cliente cl) {
-        String sql = "DELETE FROM cliente WHERE id_cliente  = ?;";
+        String sql = "UPDATE cliente SET estado=false WHERE id_cliente  = ?;";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -138,11 +142,13 @@ public class ClienteData extends Conexion {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                cl = new Cliente();
-                cl.setId_cliente(rs.getInt("id_cliente"));
-                cl.setCl_nombre(rs.getString("cl_nombre"));
-                cl.setCl_dni(rs.getInt("cl_dni"));
-                cl.setCl_direccion(rs.getString("cl_direccion"));
+                if(rs.getBoolean("estado")){
+                    cl = new Cliente();
+                    cl.setId_cliente(rs.getInt("id_cliente"));
+                    cl.setCl_nombre(rs.getString("cl_nombre"));
+                    cl.setCl_dni(rs.getInt("cl_dni"));
+                    cl.setCl_direccion(rs.getString("cl_direccion"));
+                }
             }
             ps.close();
 

@@ -7,14 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    public static String user;
+    
     public MenuPrincipal() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         titulo.setSize(50, this.getExtendedState());
         //this.setLocationRelativeTo(null);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -42,6 +43,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        btnVenta3 = new org.edisoncor.gui.button.ButtonTask();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/Image/icondeveloper.png")).getImage());
@@ -284,6 +286,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         Opciones.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 50));
 
+        btnVenta3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/x26-listar.png"))); // NOI18N
+        btnVenta3.setText("Ventas por");
+        btnVenta3.setToolTipText("");
+        btnVenta3.setDescription("Categoria");
+        btnVenta3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVenta3MouseClicked(evt);
+            }
+        });
+        Opciones.add(btnVenta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-150, 440, 150, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -359,6 +372,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_boton2MouseClicked
 
     private void btnVenta1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVenta1MouseClicked
+        String us2=this.user;
+        //JOptionPane.showMessageDialog(null, us2+"MenuPrincipal");
+        RegistrarVenta.usuario2=us2;
         botonesVentas();
         RegistrarVenta rv = new RegistrarVenta(this, true);
         rv.setVisible(true);
@@ -419,6 +435,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         vcu.setVisible(true);
     }//GEN-LAST:event_buscar1MouseClicked
 
+    private void btnVenta3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVenta3MouseClicked
+        botonesVentas();
+        ListarVentas lv = new ListarVentas(this, true);
+        lv.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_btnVenta3MouseClicked
+
     public void botonesStock() {
         AnimationClass ops = new AnimationClass();
         //---->
@@ -434,9 +456,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         //---->
         bv.jButtonXRight(-150, 30, 10, 5, btnVenta1);
         bv.jButtonXRight(-150, 30, 10, 5, btnVenta2);
+        bv.jButtonXRight(-150, 30, 10, 5, btnVenta3);
         //<----
         bv.jButtonXLeft(30, -150, 10, 5, btnVenta1);
         bv.jButtonXLeft(30, -150, 10, 5, btnVenta2);
+        bv.jButtonXLeft(30, -150, 10, 5, btnVenta3);
     }
 
     public void botonesEmpleados() {
@@ -465,6 +489,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         internett.jLabelXLeft(10, -40, 10, 2, clientes2);
     }
 
+      
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -505,6 +530,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private org.edisoncor.gui.button.ButtonTask boton2;
     private org.edisoncor.gui.button.ButtonTask btnVenta1;
     private org.edisoncor.gui.button.ButtonTask btnVenta2;
+    private org.edisoncor.gui.button.ButtonTask btnVenta3;
     private javax.swing.JLabel buscar1;
     private javax.swing.JLabel clientes;
     private javax.swing.JLabel clientes2;

@@ -9,10 +9,10 @@ public class Venta {
     private float descuento;
     private double sub_total;
     private double total;
-    private Empleado id_emp;
+    private Usuario id_emp;
     private Cliente cl;
 
-    public Venta(int nro_Factura, String Fecha, float in_tarjeta, float descuento,double sub_total, double total, Empleado id_emp,Cliente cl) {
+    public Venta(int nro_Factura, String Fecha, float in_tarjeta, float descuento,double sub_total, double total, Usuario id_emp,Cliente cl) {
         this.nro_Factura = nro_Factura;
         this.Fecha = Fecha;
         this.in_tarjeta = in_tarjeta;
@@ -74,11 +74,11 @@ public class Venta {
         this.total = total;
     }
 
-    public Empleado getId_emp() {
+    public Usuario getId_emp() {
         return id_emp;
     }
 
-    public void setId_emp(Empleado id_emp) {
+    public void setId_emp(Usuario id_emp) {
         this.id_emp = id_emp;
     }
 

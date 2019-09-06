@@ -275,12 +275,13 @@ public class CargarEmpleado extends javax.swing.JDialog {
 
     private void btGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuardarActionPerformed
         Empleado emp;
-    
+        if (txtDni.getText().length()<9){
         if(!(txtApellido.getText().equalsIgnoreCase(""))){
         
             String apellido=txtApellido.getText();
             String nombre=txtNombre.getText();
-            int dni=Integer.parseInt(txtDni.getText());
+            int dni;
+            dni = Integer.parseInt(txtDni.getText());
             String dir=txtDireccion.getText();
             emp=new Empleado(apellido,nombre,dni,dir);
             empleadoData.cargarEmpleado(emp);
@@ -290,6 +291,9 @@ public class CargarEmpleado extends javax.swing.JDialog {
             
         }else{
             JOptionPane.showMessageDialog(this,"Debe rellenar todos los campos!","Cuidado",0);
+        }
+        }else{
+            JOptionPane.showMessageDialog(this,"DNI incorrecto!","Cuidado",0);
         }
     }//GEN-LAST:event_btGuardarActionPerformed
 

@@ -75,4 +75,8 @@ public class Usuario {
     public void setTipoUser(String tipoUser) {
         this.tipoUser = tipoUser;
     }
+    
+    public String toString(){
+        return id_usuario +" - "+ nombres;
+    }
 }
