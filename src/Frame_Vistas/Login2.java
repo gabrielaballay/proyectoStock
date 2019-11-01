@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class Login2 extends javax.swing.JFrame {
     private String user_login;
-    private ArrayList<Usuario> users = new ArrayList<>();
+    //private ArrayList<Usuario> users = new ArrayList<>();
     private UsuarioData usuarioData;
 
     public Login2() {
@@ -19,7 +19,7 @@ public class Login2 extends javax.swing.JFrame {
         this.setSize(280, 364);
         this.setLocationRelativeTo(null);
         usuarioData = new UsuarioData();
-        users = usuarioData.listarUsuario();
+       // users = usuarioData.listarUsuario();
     }
 
     @SuppressWarnings("unchecked")
@@ -523,20 +523,15 @@ public class Login2 extends javax.swing.JFrame {
 
     public void inicioUsuario(Usuario us) {
         dispose();
-        MenuPrincipal mp = new MenuPrincipal();
-        
+        MenuPrincipal mp = new MenuPrincipal();        
         mp.user=user_login;
-        mp.opEmpleado.setVisible(false);
-        mp.opEmpleadoLbl.setVisible(false);
-        mp.setVisible(true);
-        mp.menuUs.setVisible(false);
+        mp.setVisible(true);        
     }
 
     public void inicioAdmin(Usuario us) {
         dispose();
         MenuPrincipal mp = new MenuPrincipal();
         mp.user=user_login;
-        //JOptionPane.showMessageDialog(null,user_login+"hola");
         mp.setVisible(true);
     }
 

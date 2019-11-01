@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Venta_Detalle_Data extends Conexion{
-    Connection con=getConexion();
-    
+        
     public boolean cargarDetalleV(Venta_Detalle vd){
+        Connection con=getConexion();
         PreparedStatement ps=null;
         String sql="INSERT INTO detalleventas (nro_Factura, cantProductoFactura,imp_Total, id_producto)"
                 + "VALUES ( ? , ? , ? , ? );";
@@ -24,47 +24,41 @@ public class Venta_Detalle_Data extends Conexion{
                         
             ps.execute();
             ps.close();
-            return true;
-            
+            return true;            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MenuPrincipal.Opciones, ex,"Error al cargar Factura",0);
             return false;
         }
     }
     
-    public ArrayList<Venta_Detalle> listarDetalleVentas(){
-        
+    public ArrayList<Venta_Detalle> listarDetalleVentas(int cel){
+        Connection con=getConexion();
         ArrayList<Venta_Detalle> vdetalle=new ArrayList<>();
         Venta_Detalle vd = null;        
         try{
-            String sql="SELECT * FROM detalleventas;";
+            String sql="SELECT * FROM detalleventas WHERE nro_Factura=?;";
             PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, cel);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 vd=new Venta_Detalle();
                 vd.setId_detalle(rs.getInt("id_detalle"));
-                Venta ven=buscarVenta(rs.getInt("nro_Factura"));
+                Venta ven=new Venta();
+                ven.setNro_Factura(rs.getInt("nro_Factura"));
                 vd.setNroFact(ven);
                 vd.setCantFact(rs.getInt("cantProductoFactura"));
                 vd.setImpTotal(rs.getDouble("imp_Total"));
-                Producto p=buscarProductoId(rs.getInt("id_producto"));
+                Producto p=new Producto();
+                p.setId_stock(rs.getInt("id_producto"));
                 vd.setId_pro(p);
                 vdetalle.add(vd);
             }
             ps.close();
+            return vdetalle;
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(MenuPrincipal.Opciones, ex,"Error al Listar Factura",0);
+            return null;
         }
-        return vdetalle;
-    }
-    
-    public Venta buscarVenta(int nro){
-        VentaData vd=new VentaData();
-        return vd.BuscarVenta(nro);
-    }
-    
-    public Producto buscarProductoId(int id){
-        ProductoData pd=new ProductoData();
-        return pd.buscarProductoId(id);
-    }
+        
+    }    
 }

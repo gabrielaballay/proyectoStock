@@ -62,4 +62,14 @@ public class ModelarTabla {
             tabla.getColumnModel().getColumn(4).setMaxWidth(90);
         }
     }
+    
+    public void modelaCuentaCorriente(JTable tabla){
+        tabla.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (tabla.getColumnModel().getColumnCount() > 0) {
+            tabla.getColumnModel().getColumn(0).setMaxWidth(200);
+            tabla.getColumnModel().getColumn(1).setMaxWidth(100);
+            tabla.getColumnModel().getColumn(2).setMaxWidth(100);
+            tabla.getColumnModel().getColumn(3).setMaxWidth(100);
+        }
+    }
 }

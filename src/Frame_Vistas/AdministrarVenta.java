@@ -2,11 +2,14 @@ package Frame_Vistas;
 
 import Clases_Modelos.LimpiarFrm;
 import Clases_Modelos.ModelarTabla;
+import Clases_Modelos.Producto;
+import Clases_Modelos.ProductoData;
 import Clases_Modelos.Venta;
 import Clases_Modelos.VentaData;
 import Clases_Modelos.Venta_Detalle;
 import Clases_Modelos.Venta_Detalle_Data;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AdministrarVenta extends javax.swing.JDialog {
@@ -15,6 +18,7 @@ public class AdministrarVenta extends javax.swing.JDialog {
     private ArrayList<Venta> ventasCombo = new ArrayList<>();
     private VentaData venData = new VentaData();
     private Venta_Detalle_Data vdd = new Venta_Detalle_Data();
+    private ProductoData pd=new ProductoData();
     
 
     public AdministrarVenta(java.awt.Frame parent, boolean modal) {
@@ -405,24 +409,26 @@ public class AdministrarVenta extends javax.swing.JDialog {
             labNroFac.setText((String) cboFactura.getSelectedItem());
 
             int cel = Integer.parseInt(cboFactura.getSelectedItem().toString());
-            vDetalles = vdd.listarDetalleVentas();
-
-            for (Venta_Detalle vd : vDetalles) {
-                if (vd.getNroFact().getNro_Factura() == cel) {
-                    model.addRow(new Object[]{vd.getId_pro().getCodigo(), vd.getId_pro().getProducto()+" "+vd.getId_pro().getMarca(),
-                        vd.getCantFact(), vd.getId_pro().getPrecioGravamen(), vd.getImpTotal()});
-                    txtInteres.setText(vd.getNroFact().getIn_tarjeta() + "");
-                    txtDescuento.setText(vd.getNroFact().getDescuento() + "");
-                    txtSubTotal.setText(vd.getNroFact().getSub_total() + "");
-                    txtTotal.setText(vd.getNroFact().getTotal() + "");
-                    txtFecha.setText(vd.getNroFact().getFecha());
-                    txtEmpleado.setText(vd.getNroFact().getId_emp().getNombres());
-                    txtClienteNombre.setText(vd.getNroFact().getCl().getCl_nombre());
-                    txtDniD.setText(vd.getNroFact().getCl().getCl_dni()+"");
-                    txtDireD.setText(vd.getNroFact().getCl().getCl_direccion());
-                    txtIdCl.setText(vd.getNroFact().getCl().getId_cliente()+"");
-                }
+            vDetalles = vdd.listarDetalleVentas(cel);
+            Venta v=venData.BuscarVenta(cel);
+            Producto p;
+            
+            for (Venta_Detalle vd : vDetalles) {                
+                int id=vd.getId_pro().getId_stock();
+                p=pd.buscarProductoId(vd.getId_pro().getId_stock());
+                model.addRow(new Object[]{p.getCodigo(), p.getProducto()+" "+p.getMarca(), 
+                    +vd.getCantFact(), p.getPrecioGravamen(), vd.getImpTotal()});
             }
+            txtDescuento.setText(v.getDescuento() + "");
+            txtSubTotal.setText(v.getSub_total() + "");
+            txtTotal.setText(v.getTotal() + "");
+            txtInteres.setText(v.getIn_tarjeta() + "");
+            txtFecha.setText(v.getFecha());                   
+            txtEmpleado.setText(v.getId_emp().getNombres());
+            txtClienteNombre.setText(v.getCl().getCl_nombre());
+            txtDniD.setText(v.getCl().getCl_dni()+"");
+            txtDireD.setText(v.getCl().getCl_direccion());
+            txtIdCl.setText(v.getCl().getId_cliente()+"");
         }
     }//GEN-LAST:event_cboFacturaActionPerformed
 

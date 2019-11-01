@@ -68,9 +68,9 @@ public class ListarVentas extends javax.swing.JDialog {
             for (VentaTotales p : venCat) {
                 modelo.addRow(new Object[]{p.getCantidad(),p.getProveedor(),p.getTotalcompra(),p.getTotalventa(),p.getGanancia()});
                 can+=p.getCantidad();
-                totalC+=p.getTotalcompra();
-                totalV+=p.getTotalventa();
-                gana+=p.getGanancia();
+                totalC+=Math.round(p.getTotalcompra());
+                totalV+=Math.round(p.getTotalventa());
+                gana+=Math.round(p.getGanancia());
             }
             txtCantidad.setText(can+"");
             txtCompra.setText(totalC+"");

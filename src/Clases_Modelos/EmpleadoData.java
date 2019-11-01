@@ -17,19 +17,16 @@ public class EmpleadoData extends Conexion {
             String sql = "INSERT INTO empleado (apellido,nombre,dni,direccion, estado)"
                     + "VALUES (?,?,?,?, true);";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
             ps.setString(1, emp.getApellido());
             ps.setString(2, emp.getNombre());
             ps.setInt(3, emp.getDni());
             ps.setString(4, emp.getDireccion());
             ps.execute();
-
             ps.close();
-
+            //con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,ex, "error al guardar un empleado",0);
         }
-
     }
 
     public ArrayList listarEmpleado() {
@@ -51,10 +48,12 @@ public class EmpleadoData extends Conexion {
                 }
             }
             ps.close();
+            //con.close();
+            return empleados;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex,"error al listar empleado",0);
+            return null;
         }
-        return empleados;
     }
 
     public void eliminarEmpleado(int dni) {
@@ -66,7 +65,7 @@ public class EmpleadoData extends Conexion {
             JOptionPane.showMessageDialog(MenuPrincipal.Opciones, "Se Elimino El Empleado Correctamente", "Atencion", 1);
 
             ps.close();
-
+            //con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,ex, "error al intentar eliminar un empleado",0);
         }
@@ -83,8 +82,8 @@ public class EmpleadoData extends Conexion {
             ps.setString(4, emp.getDireccion());
             ps.setInt(5, dni);
             ps.executeUpdate();
-
             ps.close();
+            //con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,ex, "error al intentar modificar un empleado",0);
         }
@@ -96,11 +95,8 @@ public class EmpleadoData extends Conexion {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 if(rs.getBoolean("estado")){
                     e = new Empleado();
@@ -112,10 +108,11 @@ public class EmpleadoData extends Conexion {
                 }
             }
             ps.close();
-
+            //con.close();
+            return e;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,ex, "error al buscar un empleado",0);
+            return null;
         }
-        return e;
     }
 }

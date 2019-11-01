@@ -210,6 +210,8 @@ public class ListaProductos extends javax.swing.JDialog {
 
     private void btnCargarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarProActionPerformed
         double suma;
+        double subTotal=0;
+        double total=0;
         int cel = tbProductos.getSelectedRow();
         String cantidadHay = JOptionPane.showInputDialog("Ingrese Cantidad del Producto");
         if (cantidadHay != null && !cantidadHay.equalsIgnoreCase("") && cel >= 0) {
@@ -218,7 +220,7 @@ public class ListaProductos extends javax.swing.JDialog {
 
             String pre = tbProductos.getValueAt(cel, 3).toString();
             suma = Double.parseDouble(pre);
-            suma = suma * can;
+            suma = (suma * can);
 
             String[] datos = new String[5];
             datos[0] = tbProductos.getValueAt(cel, 0).toString();
@@ -226,7 +228,13 @@ public class ListaProductos extends javax.swing.JDialog {
             datos[2] = can + "";
             datos[3] = pre;
             datos[4] = suma + "";
-            model.addRow(datos);// TODO add your handling code here:
+            model.addRow(datos);
+            if(!RegistrarVenta.txtSubTotal.getText().isEmpty()){
+                subTotal=Double.parseDouble(RegistrarVenta.txtSubTotal.getText());
+                total=Double.parseDouble(RegistrarVenta.txtTotal.getText());
+            }
+            RegistrarVenta.txtSubTotal.setText((subTotal+suma) + "");
+            RegistrarVenta.txtTotal.setText((total+suma) + "");
         }
     }//GEN-LAST:event_btnCargarProActionPerformed
 

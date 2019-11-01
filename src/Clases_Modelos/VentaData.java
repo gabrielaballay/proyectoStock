@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class VentaData extends Conexion {
-    Connection con = getConexion();
+    private Venta venta=new Venta();
+    private Connection con = getConexion();
 
     public boolean cargarVenta(Venta v) {
         LocalDate fe;
@@ -34,8 +35,8 @@ public class VentaData extends Conexion {
 
             ps.executeUpdate();
             ps.close();
+            //con.close();
             return true;
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al guardar una Venta", 0);
             return false;
@@ -43,31 +44,35 @@ public class VentaData extends Conexion {
     }
 
     public ArrayList listarVentas() {
+        Venta venta=null;
         ArrayList<Venta> ventas = new ArrayList<>();
         try {
             String sql = "SELECT * FROM ventas;";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            Venta venta;
             while (rs.next()) {
-                venta = new Venta();
+                venta=new Venta();
                 venta.setNro_Factura(rs.getInt("nro_Factura"));
                 venta.setFecha(rs.getDate("fecha") + "");
                 venta.setIn_tarjeta(rs.getFloat("interesTar"));
                 venta.setDescuento(rs.getFloat("descuento"));
                 venta.setSub_total(rs.getDouble("sub_total"));
                 venta.setTotal(rs.getDouble("total"));
-                Usuario e = buscarEmpleado(rs.getInt("id_empleado"));
+                Usuario e = new Usuario();
+                e.setId_usuario(rs.getInt("id_empleado"));
                 venta.setId_emp(e);
-                Cliente c = buscarCliente(rs.getInt("id_cliente"));
+                Cliente c =new  Cliente();
+                c.setId_cliente(rs.getInt("id_cliente"));            
                 venta.setCl(c);
                 ventas.add(venta);
             }
             ps.close();
+            //con.close();
+            return ventas;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error a Listar una Venta", 0);
-        }
-        return ventas;
+            return null;
+        }        
     }
 
     public Venta BuscarVenta(int nro) {
@@ -78,7 +83,7 @@ public class VentaData extends Conexion {
             ps.setInt(1, nro);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                venta = new Venta();
+                venta=new Venta();
                 venta.setNro_Factura(rs.getInt("nro_Factura"));
                 venta.setFecha(rs.getDate("fecha") + "");
                 venta.setIn_tarjeta(rs.getFloat("interesTar"));
@@ -91,11 +96,12 @@ public class VentaData extends Conexion {
                 venta.setId_emp(e);
             }
             ps.close();
-
+            return venta;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al buscar una venta", 0);
+            return null;
         }
-        return venta;
+        
     }
 
     public Usuario buscarEmpleado(int id) {

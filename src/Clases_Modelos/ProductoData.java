@@ -17,7 +17,6 @@ public class ProductoData extends Conexion {
 private Connection con =getConexion();
 
     public void cargarProducto(Producto p) {
-
         try {
             String sql = "INSERT INTO producto (codigo,producto,cantidad,precio,marca,gravamen,precioGravamen,proveedor,categoria, estado) "
                     + "VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , true);";
@@ -32,40 +31,42 @@ private Connection con =getConexion();
             ps.setString(8, p.getProveedor());
             ps.setString(9, p.getCategoria());
             ps.execute();
-            
             ps.close();
+            //con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al guardar un producto", 0);            
         }
     }
 
     public ArrayList listarProducto() {
+        Producto p=null;
         ArrayList<Producto> productos = new ArrayList<Producto>();
         try {
             String sql = "SELECT * FROM producto;";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            Producto producto;
             while (rs.next()) {
                 if(rs.getBoolean("estado")){
-                    producto = new Producto();
-                    producto.setCodigo(rs.getString("codigo"));
-                    producto.setProducto(rs.getString("producto"));
-                    producto.setCantidad(rs.getInt("cantidad"));
-                    producto.setPrecio(rs.getDouble("precio"));
-                    producto.setMarca(rs.getString("marca"));
-                    producto.setGravamen(rs.getFloat("gravamen"));
-                    producto.setPrecioGravamen(rs.getDouble("precioGravamen"));
-                    producto.setProveedor(rs.getString("proveedor"));
-                    producto.setCategoria(rs.getString("categoria"));
-                    productos.add(producto);
+                    p=new Producto();
+                    p.setCodigo(rs.getString("codigo"));
+                    p.setProducto(rs.getString("producto"));
+                    p.setCantidad(rs.getInt("cantidad"));
+                    p.setPrecio(rs.getDouble("precio"));
+                    p.setMarca(rs.getString("marca"));
+                    p.setGravamen(rs.getFloat("gravamen"));
+                    p.setPrecioGravamen(rs.getDouble("precioGravamen"));
+                    p.setProveedor(rs.getString("proveedor"));
+                    p.setCategoria(rs.getString("categoria"));
+                    productos.add(p);
                 }
             }
             ps.close();
+            //con.close();
+            return productos;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al listar producto", 0);
+            return null;
         }
-        return productos;
     }
 
     public void actiualizarProducto(Producto producto, String cod) {
@@ -85,8 +86,8 @@ private Connection con =getConexion();
             ps.setString(9, producto.getCategoria());
             ps.setString(10, cod);
             ps.executeUpdate();
-
             ps.close();
+            //con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al actualizar un producto", 0);
         }
@@ -100,27 +101,23 @@ private Connection con =getConexion();
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "El Producto se Elimino\n en forma Correcta", "Atencion", 1);
             ps.close();
-
+            //con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al borrar un producto", 0);
         }
-
     }
 
     public Producto buscarProducto(String cod) {
-        Producto p = null;
+        Producto p=null;
         String sql = "SELECT * FROM producto WHERE codigo=?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setString(1, cod);
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 if(rs.getBoolean("estado")){
-                    p = new Producto();
+                    p=new Producto();
                     p.setId_stock(rs.getInt("id_producto"));
                     p.setCodigo(rs.getString("Codigo"));
                     p.setProducto(rs.getString("producto"));
@@ -134,27 +131,25 @@ private Connection con =getConexion();
                 }
             }
             ps.close();
-
+            //con.close();
+            return p;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al buscar un producto aca", 0);
+            return null;
         }
-        return p;
     }
 
     public Producto buscarProductoId(int id) {
-        Producto p = null;
+        Producto p=null;
         String sql = "SELECT * FROM producto WHERE id_producto = ?;";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 if(rs.getBoolean("estado")){
-                    p = new Producto();
+                    p=new Producto();
                     p.setId_stock(rs.getInt("id_producto"));
                     p.setCodigo(rs.getString("Codigo"));
                     p.setProducto(rs.getString("producto"));
@@ -166,11 +161,11 @@ private Connection con =getConexion();
                 }
             }
             ps.close();
-
+            return p;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al buscar un producto", 0);
+            return null;
         }
-        return p;
     }
 
     public void actiualizarProductoVenta(int can, String cod) {
@@ -180,8 +175,8 @@ private Connection con =getConexion();
             ps.setInt(1, can);
             ps.setString(2, cod);
             ps.executeUpdate();
-
             ps.close();
+            //con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al actualizar un producto", 0);
         }
@@ -209,6 +204,7 @@ private Connection con =getConexion();
                 listaCategoria.add(vts);
             }
             ps.close();
+            //con.close();
             return listaCategoria;
         } catch (SQLException ex) {
             Logger.getLogger(ProductoData.class.getName()).log(Level.SEVERE, null, ex);

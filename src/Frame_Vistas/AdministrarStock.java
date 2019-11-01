@@ -381,6 +381,10 @@ public class AdministrarStock extends javax.swing.JDialog {
      */
     private void btActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btActualizarActionPerformed
         Producto pro;
+        int can=0;
+        double pre=0;
+        float inter=0;
+        double total=0;
 
         if (!(txtCodigo.getText().equalsIgnoreCase("")) && !(txtProducto.getText().equalsIgnoreCase(""))) {
             int confirma = JOptionPane.showConfirmDialog(this, "Esta Seguro de Actualizar\nel Producto?", "ATENCION", 0, 3);
@@ -388,12 +392,12 @@ public class AdministrarStock extends javax.swing.JDialog {
             if (confirma == 0) {
                 String codi = txtCodigo.getText();
                 String produc = txtProducto.getText();
-                int can = Integer.parseInt(txtCantidad.getText());
-                double pre = Double.parseDouble(txtPrecio.getText());
+                can = Integer.parseInt(txtCantidad.getText());
+                pre = Double.parseDouble(txtPrecio.getText());
                 String mar = txtMarca.getText();
-                float inter = Float.parseFloat(txtPorcen.getText());
-                double total = pre * inter / 100;
-                total = total + pre;
+                inter = Float.parseFloat(txtPorcen.getText());
+                total = pre * inter / 100;
+                total = Math.ceil(total + pre);
                 String prove=txtProveedor.getText();
                 String cate=txtCategoria.getText();
                 //Esto Actualiza Base de Datos...

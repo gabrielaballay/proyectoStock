@@ -9,16 +9,17 @@ import javax.swing.JOptionPane;
 
 public class Conexion {
 
-    private final String url = "jdbc:mysql://localhost/tienda2";
-    private final String usuario = "root";
-    private final String pas = "";
-    private Connection conexion=null;
+    private final String URL = "jdbc:mysql://localhost/tienda2";
+    private final String USUARIO = "root";
+    private final String PASS = "";
+    private Connection conexion;
     
     public Connection getConexion(){
+        conexion=null;
         try {
             if (conexion == null) {
                 Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection(url, usuario, pas);
+                conexion = DriverManager.getConnection(URL, USUARIO, PASS);
             }
             return conexion;
         } catch (ClassNotFoundException ex) {

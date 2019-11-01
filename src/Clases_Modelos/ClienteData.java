@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ClienteData extends Conexion {
-
     private Connection con = getConexion();
 
     public int guardarCliente(Cliente cl) {
@@ -16,22 +15,16 @@ public class ClienteData extends Conexion {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setString(1, cl.getCl_nombre());
             ps.setInt(2, cl.getCl_dni());
             ps.setString(3, cl.getCl_direccion());
-
             ps.execute();
-
             ps.close();
-
             return 1;
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar un cliente " + ex);
             return 0;
         }
-
     }
 
     public ArrayList<Cliente> listarCliente() {
@@ -41,7 +34,6 @@ public class ClienteData extends Conexion {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
             Cliente cl;
             while (rs.next()) {
                 if(rs.getBoolean("estado")){
@@ -54,11 +46,11 @@ public class ClienteData extends Conexion {
                 }
             }
             ps.close();
-
+            return clientes;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al listar un cliente " + ex);
+            return null;
         }
-        return clientes;
     }
 
     public Cliente buscarCliente(int clDni) {
@@ -67,11 +59,8 @@ public class ClienteData extends Conexion {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setInt(1, clDni);
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 if(rs.getBoolean("estado")){
                     cl = new Cliente();
@@ -82,11 +71,11 @@ public class ClienteData extends Conexion {
                 }
             }
             ps.close();
-
+            return cl;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar un cliente " + ex);
-        }
-        return cl;
+            return null;
+        }        
     }
 
     public void eliminarCliente(Cliente cl) {
@@ -94,13 +83,9 @@ public class ClienteData extends Conexion {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setInt(1, cl.getId_cliente());
-
             ps.execute();
-
             ps.close();
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al Borrar un cliente " + ex);
         }
@@ -111,23 +96,17 @@ public class ClienteData extends Conexion {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setString(1, cl.getCl_nombre());
             ps.setInt(2, cl.getCl_dni());
             ps.setString(3, cl.getCl_direccion());
             ps.setInt(4, cl.getId_cliente());
-
             ps.execute();
-
             ps.close();
-
             return 1;
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar un cliente " + ex);
             return 0;
         }
-
     }
 
     public Cliente buscarClId(int id) {
@@ -136,11 +115,8 @@ public class ClienteData extends Conexion {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 if(rs.getBoolean("estado")){
                     cl = new Cliente();
@@ -151,10 +127,10 @@ public class ClienteData extends Conexion {
                 }
             }
             ps.close();
-
+            return cl;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar un cliente " + ex);
+            return null;
         }
-        return cl;
     }
 }
